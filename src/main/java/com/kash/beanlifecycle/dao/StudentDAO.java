@@ -1,5 +1,6 @@
 package com.kash.beanlifecycle.dao;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.sql.*;
@@ -18,6 +19,8 @@ public class StudentDAO {
     @Value("${mySql.driver}")
     private String driver;
 
+    Connection con;
+
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -34,35 +37,38 @@ public class StudentDAO {
         this.driver = driver;
     }
 
-    public Connection getConnection() {
-        Connection connection = null;
+    @PostConstruct
+    public void getConnection() {
+
         try {
 
             // load driver:
             Class.forName(this.driver);
 
             // get connection:
-            connection = DriverManager.getConnection(this.url, this.userName, this.password);
+            con = DriverManager.getConnection(this.url, this.userName, this.password);
 
-            if (connection != null) {
+            if (con != null) {
                 System.out.println("Relax Bro, Connection With Database is Successful");
             } else {
                 System.out.println("No Barry!, Try again something has gone wrong");
             }
+
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-        return connection;
+
     }
 
-    public void closeConnection(Connection con) throws SQLException {
+
+    public void closeConnection() throws SQLException {
         // connection close:
         con.close();
     }
 
     public void selectAllRows() throws SQLException {
-        // get connection:
-        Connection con = getConnection();
+
+        // get connection: at the time of bean creation:
 
         // execute query:
         Statement stmt = con.createStatement();
@@ -81,14 +87,12 @@ public class StudentDAO {
 
         }
 
-        // connection close:
-        closeConnection(con);
+
     }
 
     public void deleteStudentRecord(int studentId) throws SQLException {
 
-        // get connection:
-        Connection con = getConnection();
+        // get connection: at the time of bean creation:
 
         // execute query:
         Statement stmt = con.createStatement();
@@ -97,7 +101,6 @@ public class StudentDAO {
 
         System.out.println("Successfully Delete the Record with studentId: " + studentId);
 
-        // connection close:
-        closeConnection(con);
+
     }
 }
