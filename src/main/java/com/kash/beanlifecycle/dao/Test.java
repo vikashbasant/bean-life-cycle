@@ -11,8 +11,14 @@ public class Test {
         StudentDAO studentDAO = context.getBean("studentDAO", StudentDAO.class);
         studentDAO.selectAllRows();
 
-        // close the container:
-        context.close();
+        /*// close the container:
+        context.close();*/
+
+        // another way to close container: it is an alternative for close() method:
+        context.registerShutdownHook();
+
+
+
     }
 }
 
