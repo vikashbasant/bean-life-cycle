@@ -8,12 +8,12 @@
         http://www.springframework.org/schema/context
         https://www.springframework.org/schema/context/spring-context.xsd">
 
-
+    <context:annotation-config/>
 
     <context:property-placeholder location="database-connection.properties"/>
 
     <!--Create an Object with the StudentDAO-->
-    <bean id="studentDAO" class="com.kash.beanlifecycle.dao.StudentDAO">
+    <bean id="studentDAO" class="com.kash.beanlifecycle.dao.StudentDAO" init-method="init" destroy-method="destroy">
         <property name="userName" value="${mySql.userName}"></property>
         <property name="password" value="${mySql.password}"></property>
         <property name="url" value="${mySql.url}"></property>
@@ -21,8 +21,6 @@
 
 
     </bean>
-
-    <bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor"/>
 
 
 </beans>

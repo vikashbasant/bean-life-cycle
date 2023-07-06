@@ -56,7 +56,7 @@ public class StudentDAO {
      * <p/>
      * We can give our init method name as anything.
      */
-    @PostConstruct
+    // @PostConstruct
     public void init() {
         System.out.println("=>>Inside Custom Init Method<<=");
         getConnection();
@@ -138,7 +138,7 @@ public class StudentDAO {
      * Remember that the destroy method will only be called once your container object got destroyed/close.
      *
      */
-    @PreDestroy
+    // @PreDestroy
     public void destroy() throws SQLException {
         System.out.println("Inside Bean destroy method");
 
