@@ -9,6 +9,9 @@ public class Test {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
         StudentDAO studentDAO = context.getBean("studentDAO", StudentDAO.class);
         studentDAO.selectAllRows();
+
+        // close the container:
+        context.close();
     }
 }
 
